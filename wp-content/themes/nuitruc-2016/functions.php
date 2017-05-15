@@ -209,6 +209,11 @@ function html5blank_header_scripts()
 function html5blank_conditional_scripts()
 {
         wp_register_script('trungtamtiengnhatscript', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0.0'); // Conditional script(s)
+
+        wp_localize_script( 'trungtamtiengnhatscript', 'get_course', array(
+            'ajax_url' => admin_url( 'admin-ajax.php' )
+        ));
+
         wp_enqueue_script('trungtamtiengnhatscript'); // Enqueue it!
 }
 
@@ -554,4 +559,41 @@ function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 short
     return '<h2>' . $content . '</h2>';
 }
 
+add_action( 'wp_ajax_nopriv_get_course_do_ajax', 'get_course_do_ajax' );
+add_action( 'wp_ajax_get_course_do_ajax', 'get_course_do_ajax' );
+function get_course_do_ajax()
+{
+    $slug = $_POST['data_slug'];
+    $args = [
+        'orderby' => 'DESC',
+        'post_type' => 'post',
+        'category_name' => $slug,
+        'post_status' => 'publish'
+    ];
+
+    $results = new WP_Query( $args );
+    $html = '';
+    if($results->have_posts()):
+        while ( $results->have_posts() ) : $results->the_post();
+            echo "<article><div class='thumbnail'>";
+              if ( has_post_thumbnail() ) {
+                    the_post_thumbnail('medium');
+                }
+            echo "</div>";
+            echo '<h3 class="post_title">';
+            echo '<a href=">'; the_permalink(); echo '">';
+                the_title();
+            echo '</a>';
+            echo '</a>';
+            echo '</h3>';
+            echo '<figure>'; the_excerpt(); echo '</figure>';
+            echo '</article>';
+        endwhile;
+        wp_reset_postdata();
+        else :
+            echo 'Sorry, no posts matched your criteria.';
+        endif;
+
+    wp_die();
+}
 ?>

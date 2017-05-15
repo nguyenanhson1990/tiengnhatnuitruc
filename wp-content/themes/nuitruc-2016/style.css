@@ -1561,10 +1561,11 @@ a img.aligncenter {
 .menu_active{
     background: #9C1F23 !important;
 }
-.tab_content{
-    display: none;
-}
 
-.tab_current{
-    display: block;
+#course_list{
+	text-align: left;
+}
+#course_list article{
+	display: inline-block;
+	width: 30%;
 }

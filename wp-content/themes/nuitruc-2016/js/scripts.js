@@ -44,11 +44,27 @@ $(document).ready(function() {
     $('#course_menu .menu').find('a[href*=#]').on('click', function(e){
         e.preventDefault();
 
-        var tab_id = $(this).attr('href');
+        var data_slug = $(this).attr('href'),
+            data_slug = data_slug.replace('#','');
+
         $('#course_menu .menu').find('li').removeClass('menu_active');
-        $('.tab_content').removeClass('tab_current');
-        $('div' + tab_id).addClass('tab_current');
         $(this).parent().addClass('menu_active');
+
+        jQuery.ajax({
+            url : get_course.ajax_url,
+            type : 'post',
+            dataType: 'html',
+            data : {
+                action : 'get_course_do_ajax',
+                data_slug : data_slug
+            },
+            success : function( response ) {
+                $('#course_list').html('').append(response);
+            },
+            error: function(et){
+                console.log(et);
+            }
+        });
 
     });
 
