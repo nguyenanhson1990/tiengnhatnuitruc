@@ -1518,6 +1518,10 @@ a img.aligncenter {
     font-size: 1.2em;
 }
 
+.block-area{
+	margin-bottom: 1em;
+}
+
 /*course_menu*/
 #course_menu{
     padding: 1em 0;
@@ -1563,9 +1567,31 @@ a img.aligncenter {
 }
 
 #course_list{
-	text-align: left;
+	text-align: center;
 }
 #course_list article{
 	display: inline-block;
-	width: 30%;
+	width: 20%;
+	margin: 0.5em 0.5em;
+	vertical-align: top;
+	padding: 1em;
+	border: 1px rgba(0,0,0,0.0980392) solid;
+	text-align: left;
+}
+#course_list article .thumbnail{
+	text-align: center;
+	margin-bottom: 0.5em;
+}
+#course_list article h3{
+	font-size: 15px;
+	margin-bottom: 0.5em;
+}
+.more{
+	font-weight: bold;
+	color: rgba(192, 34, 34, 0.9);
+}
+
+/*nt-news*/
+#nt-news article .thumbnail,.excerpt{
+	float: left;
 }

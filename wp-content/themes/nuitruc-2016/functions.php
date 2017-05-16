@@ -577,16 +577,17 @@ function get_course_do_ajax()
         while ( $results->have_posts() ) : $results->the_post();
             echo "<article><div class='thumbnail'>";
               if ( has_post_thumbnail() ) {
-                    the_post_thumbnail('medium');
+                    the_post_thumbnail('newmedium-200x124');
                 }
             echo "</div>";
             echo '<h3 class="post_title">';
             echo '<a href=">'; the_permalink(); echo '">';
-                the_title();
+                wp_trim_words( get_the_title(), 10, null );
             echo '</a>';
             echo '</a>';
             echo '</h3>';
-            echo '<figure>'; the_excerpt(); echo '</figure>';
+            echo '<figure>'.wp_trim_words(get_the_excerpt(),15,'...<a href="'.get_the_permalink().'"><span class="more"><i>Chi tiết</i></span></a>');
+            echo '</figure>';
             echo '</article>';
         endwhile;
         wp_reset_postdata();

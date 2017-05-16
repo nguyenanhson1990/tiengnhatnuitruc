@@ -22,13 +22,14 @@ get_header();
         <!-- .course menu -->
 
         <!-- Begining japanese -->
-        <div id="course_list">
+        <div class="block-area" id="course_list">
             <?php
             $args = [
                 'orderby' => 'DESC',
                 'post_type' => 'post',
-                'category_name' => $slug,
-                'post_status' => 'publish'
+                'category_name' => 'thong-tin-tuyen-sinh',
+                'post_status' => 'publish',
+                'posts_per_page' => 8
             ];
             $results = new WP_Query($args);
             $html = '';
@@ -39,13 +40,13 @@ get_header();
                         <div class="thumbnail">
                             <?php
                                 if ( has_post_thumbnail() ) {
-                                    the_post_thumbnail('medium');
+                                    the_post_thumbnail('newmedium-200x124');
                                 }
                             ?>
                         </div>
                         <h3 class="post_title">
-                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                        <figure><?php the_excerpt(); ?></figure>
+                            <a href="<?php the_permalink(); ?>"><?php echo wp_trim_words( get_the_title(), 10, null ); ?></a></h3>
+                        <figure><?php echo wp_trim_words(get_the_excerpt(),15,'...<a href="'.get_the_permalink().'"><span class="more"><i>Chi tiết</i></span></a>'); ?></figure>
                     </article>
             <?php
                 endwhile;
@@ -54,6 +55,49 @@ get_header();
                 echo 'Sorry, no posts matched your criteria.';
             endif;
             ?>
+        </div>
+
+        <!-- Bản tin trung tâm -->
+        <div class="block-area" id="nt-news">
+            <!-- main title -->
+            <div class="blockBigTitle">
+                <h2>Bản tin trung tâm</h2>
+                <p>Tin tức sự kiện diễn ra tại trung tâm</p>
+            </div>
+            <?php
+            $args = [
+                'orderby' => 'DESC',
+                'post_type' => 'post',
+                'category_name' => 'thong-tin-tuyen-sinh',
+                'post_status' => 'publish',
+                'posts_per_page' => 8
+            ];
+            $results = new WP_Query($args);
+            $html = '';
+            if ($results->have_posts()):
+                while ($results->have_posts()) : $results->the_post();
+                    ?>
+                    <article>
+                        <div class="thumbnail">
+                            <?php
+                            if ( has_post_thumbnail() ) {
+                                the_post_thumbnail('newmedium-200x124');
+                            }
+                            ?>
+                        </div>
+                        <div class="excerpt">
+                            <h3><a href="<?php the_permalink(); ?>" title="<?php echo get_the_title(); ?>"> <?php echo get_the_title(); ?></a></h3>
+                            <?php echo wp_trim_words(get_the_excerpt(),50,'..'); ?>
+                        </div>
+                    </article>
+                    <?php
+                endwhile;
+                wp_reset_postdata();
+            else :
+                echo 'Sorry, no posts matched your criteria.';
+            endif;
+            ?>
+            <!-- .main title -->
         </div>
     </div>
 </div>
