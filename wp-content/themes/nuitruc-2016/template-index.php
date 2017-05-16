@@ -4,9 +4,34 @@ get_header();
 ?>
 <div class="main">
     <div id="mainvisual">
+        <div class="overlay">
+            <ul class="nt-news-list">
+                <?php
+                    $args = [
+                        'orderby' => 'DESC',
+                        'post_type' => 'post',
+                        'category_name' => 'thong-tin-trung-tam',
+                        'post_status' => 'publish',
+                        'posts_per_page' => 5
+                    ];
+                    $results = new WP_Query($args);
+                    $html = '';
+                    if ($results->have_posts()):
+                    while ($results->have_posts()) : $results->the_post();
+                ?>
+                <li><a href="<?php the_permalink(); ?>"><?php echo get_the_title(); ?></a></h3></li>
+                <?php
+                    endwhile;
+                        wp_reset_postdata();
+                    else :
+                        echo 'Hiện tại không có khóa học nào';
+                    endif;
+                ?>
+            </ul>
+        </div>
         <?php echo do_shortcode("[crellyslider alias=home-page-slider]"); ?>
     </div>
-    <div class="content">
+    <div class="warraper">
         <!-- main title -->
         <div class="blockBigTitle">
             <h2>Các khóa học đang tuyển sinh</h2>
@@ -52,7 +77,7 @@ get_header();
                 endwhile;
                 wp_reset_postdata();
             else :
-                echo 'Sorry, no posts matched your criteria.';
+                echo 'Hiện tại không có khóa học nào';
             endif;
             ?>
         </div>
@@ -61,16 +86,16 @@ get_header();
         <div class="block-area" id="nt-news">
             <!-- main title -->
             <div class="blockBigTitle">
-                <h2>Bản tin trung tâm</h2>
-                <p>Tin tức sự kiện diễn ra tại trung tâm</p>
+                <h2>Kinh nghiệm học tiếng nhật</h2>
+                <p>Chia sẻ kinh nghiệm học tập tiếng nhật</p>
             </div>
             <?php
             $args = [
                 'orderby' => 'DESC',
                 'post_type' => 'post',
-                'category_name' => 'thong-tin-tuyen-sinh',
+                'category_name' => 'kinh-nghiem-hoc-tieng-nhat',
                 'post_status' => 'publish',
-                'posts_per_page' => 8
+                'posts_per_page' => 4
             ];
             $results = new WP_Query($args);
             $html = '';
@@ -90,11 +115,12 @@ get_header();
                             <?php echo wp_trim_words(get_the_excerpt(),50,'..'); ?>
                         </div>
                     </article>
+                    <div class="clearfix"></div>
                     <?php
                 endwhile;
                 wp_reset_postdata();
             else :
-                echo 'Sorry, no posts matched your criteria.';
+                echo 'Hiện tại không có dữ liệu';
             endif;
             ?>
             <!-- .main title -->

@@ -581,9 +581,8 @@ function get_course_do_ajax()
                 }
             echo "</div>";
             echo '<h3 class="post_title">';
-            echo '<a href=">'; the_permalink(); echo '">';
-                wp_trim_words( get_the_title(), 10, null );
-            echo '</a>';
+            echo '<a href="'.get_the_permalink().'">';
+              echo  wp_trim_words( get_the_title(), 10, null );
             echo '</a>';
             echo '</h3>';
             echo '<figure>'.wp_trim_words(get_the_excerpt(),15,'...<a href="'.get_the_permalink().'"><span class="more"><i>Chi tiết</i></span></a>');
@@ -592,7 +591,7 @@ function get_course_do_ajax()
         endwhile;
         wp_reset_postdata();
         else :
-            echo 'Sorry, no posts matched your criteria.';
+            echo 'Hiện tại không có khóa học nào';
         endif;
 
     wp_die();

@@ -1,9 +1,7 @@
 <?php get_header(); ?>
 
     <div class="main">
-        <div class="cat_banner">
-            <?php echo do_shortcode('[banner id="997"]'); ?>
-        </div>
+        <div class="cat_banner"></div>
         <?php
         if (function_exists('yoast_breadcrumb')) {
             yoast_breadcrumb('<div id="breadcrumbs"><div class="content">', '</div></div>');

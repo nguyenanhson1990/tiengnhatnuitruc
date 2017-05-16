@@ -3,7 +3,9 @@
 
     <!--google maps-->
     <div class="map_canvas">
-        <div id="googlemaps"></div>
+        <div id="googlemaps">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.058171681936!2d105.82119951493269!3d21.030358285997544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x87c35727c8651e0e!2zVHJ1bmcgVMOibSBWxINuIEjDs2EgVmnhu4d0LU5o4bqtdA!5e0!3m2!1sen!2sus!4v1494931855756" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+        </div>
     </div>
     <div class="contactinfo">
         <div class="item">
@@ -23,33 +25,6 @@
         </div>
     </div>
     <p class="copyright"> Copy right &copy; 2015 Bản quyền thuộc về trung tâm tiếng nhật Núi Trúc</p>
-    <script>
-        var marker;
-
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('googlemaps'), {
-                zoom: 16,
-                center: {lat: 21.0297386, lng: 105.824335}
-            });
-
-            marker = new google.maps.Marker({
-                map: map,
-                draggable: true,
-                animation: google.maps.Animation.DROP,
-                position: {lat: 21.030333, lng: 105.824918}
-            });
-            marker.addListener('click', toggleBounce);
-        }
-
-        function toggleBounce() {
-            if (marker.getAnimation() !== null) {
-                marker.setAnimation(null);
-            } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-            }
-        }
-
-    </script>
 
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
@@ -64,7 +39,6 @@
         })();
     </script>
     <!--End of Tawk.to Script-->
-
 </footer>
 <!-- /footer -->
 <?php wp_footer(); ?>
