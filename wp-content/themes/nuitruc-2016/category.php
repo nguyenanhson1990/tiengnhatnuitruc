@@ -1,30 +1,21 @@
 <?php get_header(); ?>
 
-	<div class="main">
-		<div class="cat_banner">
-			<?php echo do_shortcode('[banner id="994"]'); ?>
-		</div>
-		<?php
-					if ( function_exists('yoast_breadcrumb') )
-					{
-						yoast_breadcrumb('<div id="breadcrumbs"><div class="content">','</div></div>');
-					}
-		?>
+	<div class="container-fluid">
 		<!--/content-->
-		<div class="content">
+		<div class="row">
 			<!--contentLeft-->
-			<div class="contentLeft">
+			<div class="col-sm-9">
 					<?php get_template_part('loop'); ?>
-					<?php get_template_part('pagination'); ?>
+					<div class="text-center">
+						<?php get_template_part('pagination'); ?>
+					</div>
 			</div>
 			<!--/contentLeft-->
 			<!--sidebar-->
-			<div class="sidebar">
+			<div class="col-sm-3">
 				<?php get_sidebar(); ?>
 			</div>
 			<!--/sidebar-->
-			<div class="clearfix"></div>
-
 		</div>
 		<!--/content-->
 

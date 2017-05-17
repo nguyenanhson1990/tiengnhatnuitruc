@@ -9,10 +9,6 @@
 		{
 			get_template_part('recentposts');
 		};
-		if(is_front_page())
-		{
-			get_template_part('block/block_oshirase');
-		}
 	?>
 </aside>
 <!-- /sidebar -->

@@ -78,16 +78,7 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 	 */
 	if ( 'loggedout' == $wp_error->get_error_code() ) {
 		?>
-		<script>if ("sessionStorage" in window) {
-				try {
-					for (var key in sessionStorage) {
-						if (key.indexOf("wp-autosave-") != -1) {
-							sessionStorage.removeItem(key)
-						}
-					}
-				} catch (e) {
-				}
-			}</script>
+		<script>if("sessionStorage" in window){try{for(var key in sessionStorage){if(key.indexOf("wp-autosave-")!=-1){sessionStorage.removeItem(key)}}}catch(e){}};</script>
 		<?php
 	}
 
@@ -272,7 +263,7 @@ addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).rea
 function s(id,pos){g(id).left=pos+'px';}
 function g(id){return document.getElementById(id).style;}
 function shake(id,a,d){c=a.shift();s(id,c);if(a.length>0){setTimeout(function(){shake(id,a,d);},d);}else{try{g(id).position='static';wp_attempt_focus();}catch(e){}}}
-addLoadEvent(function(){ var p=[15,30,15,0,-15,-30,-15,0];p=p.concat(p.concat(p));var i=document.forms[0].id;g(i).position='relative';shake(i,p,20);});
+addLoadEvent(function(){ var p=new Array(15,30,15,0,-15,-30,-15,0);p=p.concat(p.concat(p));var i=document.forms[0].id;g(i).position='relative';shake(i,p,20);});
 </script>
 <?php
 }

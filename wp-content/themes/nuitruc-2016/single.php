@@ -1,14 +1,8 @@
 <?php get_header(); ?>
 
-    <div class="main">
-        <div class="cat_banner"></div>
-        <?php
-        if (function_exists('yoast_breadcrumb')) {
-            yoast_breadcrumb('<div id="breadcrumbs"><div class="content">', '</div></div>');
-        }
-        ?>
-        <div class="content">
-            <div class="contentLeft">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-9">
                 <!-- section -->
                 <section class="post_details">
 
@@ -24,12 +18,12 @@
                             <!-- /post title -->
 
                             <!-- post details -->
-                            <div class="social_info">
-				            <span class="date">
+                            <div class="social_info row">
+				            <span class="date col-sm-2">
                                 <span class="hours"><?php the_time('g:i'); ?></span>
                                 <span class="MST"><?php the_time('m/d/Y'); ?></span>
 						    </span>
-                                <ul class="list">
+                                <ul class="list col-sm-8 text-right">
                                     <li>
                                         <a href="javascript:void(0);" class="btnFbShare">
                                             <img
@@ -61,7 +55,6 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <div class="clearfix"></div>
                             </div>
                             <!-- /post details -->
                             <div class="desc">
@@ -102,8 +95,7 @@
                 ?>
                 <!-- /relatedposts -->
                 <div class="relatedposts">
-                    <h2 class="block-title"><i class="fa fa-newspaper-o icon_title" aria-hidden="true"></i>TIN LIÊN QUAN
-                    </h2>
+                    <h3 class="block-title">TIN LIÊN QUAN</h3>
                     <ul class="items">
                         <?php
                         while ($postsByTag->have_posts()) : $postsByTag->the_post();
@@ -121,7 +113,7 @@
                 </div>
             </div>
             <!--/end content left-->
-            <div class="sidebar">
+            <div class="col-sm-3">
                 <?php get_sidebar(); ?>
             </div>
             <div class="clearfix"></div>

@@ -13,7 +13,8 @@
 function MCTabs() {
 	this.settings = [];
 	this.onChange = tinyMCEPopup.editor.windowManager.createInstance('tinymce.util.Dispatcher');
-}
+};
+
 MCTabs.prototype.init = function(settings) {
 	this.settings = settings;
 };
