@@ -4,9 +4,6 @@
 <?php get_header(); ?>
 
 <div class="main">
-	<div class="cat_banner">
-		<?php echo do_shortcode('[banner id="997"]'); ?>
-	</div>
 	<?php
 				if ( function_exists('yoast_breadcrumb') )
 				{
@@ -15,7 +12,7 @@
 	?>
 	<div class="content">
     <div class="contentLeft">
-			<h2>Bạn đã đăng ký thành công . Hãy click <a href="http://trungtamtiengnhat.edu.vn">vào đây</a> để quay về trang chủ .</h2>
+			<h2>Bạn đã đăng ký nhận thông tin tuyển sinh từ Trung Tâm Tiếng Nhật Núi Trúc . Hãy click <a href="http://trungtamtiengnhat.edu.vn">vào đây</a> để quay về trang chủ .</h2>
       <br>
       <h3>申し込みいただきまして、ありがとうございました 。ホームページに戻るように<a href="http://trungtamtiengnhat.edu.vn">ホーム</a> をクリックしてください。</h3>
       <br>

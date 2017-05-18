@@ -82,6 +82,24 @@ function nuitruc_nav()
 	);
 }
 
+//right scroll navigation
+// nuitruc navigation
+function right_nav()
+{
+	wp_nav_menu(
+	array(
+		'theme_location'  => 'sidebar-menu',
+		'container'       => false,
+    'menu_id'         => 'right-nav',
+		'echo'            => true,
+		'fallback_cb'     => 'wp_page_menu',
+		'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'depth'           => 0
+		)
+	);
+}
+
+
 function current_item_nav_class ($classes, $item) {
     if (in_array('current-menu-item', $classes) ){
         $classes[] = 'active ';
@@ -203,18 +221,17 @@ function html5blank_header_scripts()
         wp_register_script('modernizr', get_template_directory_uri() . '/js/lib/modernizr-2.7.1.min.js', array(), '2.7.1'); // Modernizr
         wp_enqueue_script('modernizr'); // Enqueue it!
 
+        wp_register_script('html5blankscripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0.0'); // Custom scripts
+        wp_enqueue_script('html5blankscripts'); // Enqueue it!
     }
 }
 // Load HTML5 Blank conditional scripts
 function html5blank_conditional_scripts()
 {
-        wp_register_script('trungtamtiengnhatscript', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0.0'); // Conditional script(s)
-
-        wp_localize_script( 'trungtamtiengnhatscript', 'get_course', array(
-            'ajax_url' => admin_url( 'admin-ajax.php' )
-        ));
-
-        wp_enqueue_script('trungtamtiengnhatscript'); // Enqueue it!
+    if (is_page('pagenamehere')) {
+        wp_register_script('scriptname', get_template_directory_uri() . '/js/scriptname.js', array('jquery'), '1.0.0'); // Conditional script(s)
+        wp_enqueue_script('scriptname'); // Enqueue it!
+    }
 }
 
 // Load HTML5 Blank styles
@@ -236,8 +253,7 @@ function register_html5_menu()
     register_nav_menus(array( // Using array to specify more menus if needed
         'header-menu' => __('Header Menu', 'html5blank'), // Main Navigation
         'sidebar-menu' => __('Sidebar Menu', 'html5blank'), // Sidebar Navigation
-        'extra-menu' => __('Extra Menu', 'html5blank'), // Extra Navigation if needed (duplicate as many as you need!),
-        'course-menu' => __('Course Menu', 'html5blank') // course home page menu
+        'extra-menu' => __('Extra Menu', 'html5blank') // Extra Navigation if needed (duplicate as many as you need!)
     ));
 }
 
@@ -458,6 +474,7 @@ add_action('wp_enqueue_scripts', 'html5blank_styles'); // Add Theme Stylesheet
 add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
+//add_action( 'init', 'tuyensinh_posttype_init' );
 // Remove Actions
 remove_action('wp_head', 'feed_links_extra', 3); // Display the links to the extra feeds such as category feeds
 remove_action('wp_head', 'feed_links', 2); // Display the links to the general feeds: Post and Comment Feed
@@ -559,41 +576,4 @@ function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 short
     return '<h2>' . $content . '</h2>';
 }
 
-add_action( 'wp_ajax_nopriv_get_course_do_ajax', 'get_course_do_ajax' );
-add_action( 'wp_ajax_get_course_do_ajax', 'get_course_do_ajax' );
-function get_course_do_ajax()
-{
-    $slug = $_POST['data_slug'];
-    $args = [
-        'orderby' => 'DESC',
-        'post_type' => 'post',
-        'category_name' => $slug,
-        'post_status' => 'publish'
-    ];
-
-    $results = new WP_Query( $args );
-    $html = '';
-    if($results->have_posts()):
-        while ( $results->have_posts() ) : $results->the_post();
-            echo "<article><div class='thumbnail'>";
-              if ( has_post_thumbnail() ) {
-                    the_post_thumbnail('newmedium-200x124');
-                }
-            echo "</div>";
-            echo '<h3 class="post_title">';
-            echo '<a href="'.get_the_permalink().'">';
-              echo  wp_trim_words( get_the_title(), 10, null );
-            echo '</a>';
-            echo '</h3>';
-            echo '<figure>'.wp_trim_words(get_the_excerpt(),15,'...<a href="'.get_the_permalink().'"><span class="more"><i>Chi tiết</i></span></a>');
-            echo '</figure>';
-            echo '</article>';
-        endwhile;
-        wp_reset_postdata();
-        else :
-            echo 'Hiện tại không có khóa học nào';
-        endif;
-
-    wp_die();
-}
 ?>

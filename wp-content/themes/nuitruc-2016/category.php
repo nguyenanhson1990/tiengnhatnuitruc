@@ -1,21 +1,30 @@
 <?php get_header(); ?>
 
-	<div class="container-fluid">
+	<div class="main">
+		<div id="mainvisual">
+			<?php echo do_shortcode("[crellyslider alias=home-page-slider] "); ?>
+		</div>
+		<?php
+			if ( function_exists('yoast_breadcrumb') )
+			{
+				yoast_breadcrumb('<div id="breadcrumbs"><div class="content">','</div></div>');
+			}
+		?>
 		<!--/content-->
-		<div class="row">
+		<div class="content">
 			<!--contentLeft-->
-			<div class="col-sm-9">
+			<div class="contentLeft">
 					<?php get_template_part('loop'); ?>
-					<div class="text-center">
-						<?php get_template_part('pagination'); ?>
-					</div>
+					<?php get_template_part('pagination'); ?>
 			</div>
 			<!--/contentLeft-->
 			<!--sidebar-->
-			<div class="col-sm-3">
+			<div class="sidebar">
 				<?php get_sidebar(); ?>
 			</div>
 			<!--/sidebar-->
+			<div class="clearfix"></div>
+
 		</div>
 		<!--/content-->
 

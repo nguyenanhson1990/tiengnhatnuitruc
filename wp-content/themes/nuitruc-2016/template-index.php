@@ -2,218 +2,154 @@
 /* Template Name: Index Template */
 get_header();
 ?>
-<div class="container-fluid">
-    <div class="row" id="mainvisual">
-        <div class="col-sm-9">
-            <?php echo do_shortcode("[crellyslider alias=home-page-slider]"); ?>
-        </div>
-        <div class="col-sm-3 nt-oshirase">
-            <ul>
-                <?php
-                $args = [
-                    'orderby' => 'DESC',
-                    'post_type' => 'post',
-                    'category_name' => 'thong-tin-trung-tam',
-                    'post_status' => 'publish',
-                    'posts_per_page' => 5
-                ];
-                $results = new WP_Query($args);
-                $html = '';
-                if ($results->have_posts()):
-                    while ($results->have_posts()) : $results->the_post();
-                        ?>
-                        <li>
-                            <a href="<?php the_permalink(); ?>"><?php echo wp_trim_words( get_the_title(), 13, '...' ); ?>
-                                <img title="<?php echo get_the_title() ?>" src="<?php echo get_template_directory_uri().'/images/new.gif' ?>">
-                            </a>
-                        </li>
-                        <?php
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                    echo 'Hiện tại không có khóa học nào';
-                endif;
-                ?>
-            </ul>
-        </div>
+<div class="main">
+    <div id="mainvisual">
+      <?php echo do_shortcode("[crellyslider alias=home-page-slider] "); ?>
     </div>
+    <div class="content">
+      <div class="contentLeft">
+        <!--ban tin trung tam-->
+        <div id="jvca-news">
+          <h2 class="block-title"><i class="fa fa-bullhorn icon_title" aria-hidden="true"></i>BẢN TIN TRUNG TÂM</h2>
+          <?php $popular_posts_query = new WP_Query( array(
+              'category_name' => 'thong-tin-trung-tam',
+              'showposts' => 4
+            ) );
+          ?>
+            <?php if ( $popular_posts_query->have_posts() ) : $popular_posts_query->the_post(); ?>
+              <article class="feature-post module-item">
+                <figure>
+                  <?php
+                    if(has_post_thumbnail()){
+                  ?>
+                      <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+                        <?php echo get_the_post_thumbnail(get_the_ID(),'newlarge-385x209'); ?>
+                      </a>
+                  <?php
+                    }
+                  ?>
+                </figure>
+                <h3 class="post-title">
+                  <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+                </h3>
+                <div class="entry-content">
+                  <p><?php
+                  if(has_excerpt()){
+                    echo the_excerpt();
+                  }else{
+                    echo mb_substr(the_content(),0,170,'UTF-8').'...';
+                  }
+                  ?></p>
+                </div>
+                <a class="more btnSquare" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" rel="alternate"><span>Xem thêm</span></a>
+              </article>
 
-    <div class="warraper">
-        <!-- main title -->
-        <div class="blockBigTitle">
-            <h2>Các khóa học đang tuyển sinh</h2>
+              <section class="more-post module-item newsList">
+              <?php while($popular_posts_query->have_posts()) : $popular_posts_query->the_post(); ?>
+                <article>
+                  <figure>
+                    <?php
+                      if(has_post_thumbnail()){
+                    ?>
+                        <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+                          <?php echo get_the_post_thumbnail(get_the_ID(),'nanosmall'); ?>
+                        </a>
+                    <?php
+                      }
+                    ?>
+                  </figure>
+                  <h4 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h4>
+                  <div class="entry-content">
+                    <p>
+                      <?php
+                      if(has_excerpt()){
+                        echo the_excerpt();
+                      }else{
+                        echo mb_substr(the_content(),0,170,'UTF-8').'...';
+                      }
+                      ?>
+                    </p>
+                  </div>
+                </article>
+              <?php endwhile; ?>
 
-            <p>Hãy chọn 1 khóa học, bạn chắc chắn sẽ hài lòng</p>
+              </section>
+            <?php else: ?>
+              <?php echo 'sorry, no post not found'; ?>
+            <?php endif; ?>
+            <?php wp_reset_postdata(); ?>
+          <div class="clearfix"></div>
         </div>
-        <!-- .main title -->
+        <!--ban tin trung tam-->
+        <!-- tuyen sinh -->
+        <div id="jvca-admissions">
+          <h2 class="block-title"><i class="fa fa-book icon_title" aria-hidden="true"></i>TUYỂN SINH</h2>
+          <section class="admissions-list">
+            <?php $admiss_query = new WP_Query(array(
+              'category_name' => 'thong-tin-tuyen-sinh',
+              'showposts' => 8
+            )); ?>
+            <?php if ( $admiss_query->have_posts() ): ?>
 
-        <!-- course menu -->
-        <div id="course_menu">
-            <?php wp_nav_menu(array('theme_location' => 'course-menu', 'container_class' => 'course_menu_class')); ?>
-        </div>
-        <!-- .course menu -->
+              <?php while($admiss_query->have_posts()) : $admiss_query->the_post(); ?>
+                <article>
+                  <figure>
+                    <?php if(has_post_thumbnail()): ?>
+                      <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+                        <?php echo get_the_post_thumbnail(get_the_ID(),'newmedium-200x124'); ?>
+                      </a>
+                    <?php else: ?>
+                      <img class="attachment-post-thumbnail" src="<?php  echo get_template_directory_uri();?>/images/no_image.png" alt="no image">
+                    <?php endif;?>
+                  </figure>
+                  <h3 class="post-title">
+                    <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?>
+                      <span class="new">
+                        <?php
+                          $post_time = get_the_time('U');
+                          $last_week = time() - (7 * 24 * 60 * 60);
+                          if($post_time > $last_week):
+                        ?>
+                          <img src="<?php echo get_template_directory_uri(); ?>/images/new.gif" alt="<?php the_title_attribute(); ?>">
+                        <?php endif; ?>
+                      </span>
+                    </a>
+                  </h3>
+                  <div class="post_date"><?php the_time('d/m/Y g:i'); ?></div>
+                  <div class="entry-content">
+                    <p><?php
+                    if(has_excerpt()){
+                      echo the_excerpt();
+                    }else{
+                      echo mb_substr(the_content(),0,170,'UTF-8').'...';
+                    }
+                    ?></p>
+                  </div>
+                </article>
+              <?php endwhile; ?>
 
-        <!-- course list -->
-        <div class="row" id="course_list">
             <?php
-            $args = [
-                'orderby' => 'DESC',
-                'post_type' => 'post',
-                'category_name' => 'thong-tin-tuyen-sinh',
-                'post_status' => 'publish',
-                'posts_per_page' => 8
-            ];
-            $results = new WP_Query($args);
-            $html = '';
-            if ($results->have_posts()):
-                while ($results->have_posts()) : $results->the_post();
+              else:
+                echo 'sorry, no post not found';
+              endif;
             ?>
-                    <article class="col-sm-3">
-                        <div class="thumbnail">
-                            <?php
-                                if ( has_post_thumbnail() ) {
-                                    the_post_thumbnail('newlarge-385x209');
-                                }
-                            ?>
-                        </div>
-                        <h3 class="post_title">
-                            <a href="<?php the_permalink(); ?>"><?php echo get_the_title(); ?></a></h3>
-                        <figure><?php echo get_the_excerpt(); ?></figure>
-                    </article>
-            <?php
-                endwhile;
-                wp_reset_postdata();
-            else :
-                echo 'Hiện tại không có khóa học nào';
-            endif;
-            ?>
+            <?php wp_reset_postdata(); ?>
+          </section>
         </div>
-        <!-- .course list -->
-        <div class="row">
-            <!-- main title -->
-            <div class="blockBigTitle">
-                <h2>Thông tin hữu ích</h2>
-            </div>
-            <!-- .main title -->
-            <div class="col-sm-4 box">
-                <div class="content">
-                    <h2 class="block-title">Kinh nghiệm học tiếng nhật</h2>
-                    <div class="list container-fluid">
-                        <?php
-                            $args = [
-                                'orderby' => 'DESC',
-                                'post_type' => 'post',
-                                'category_name' => 'kinh-nghiem-hoc-tieng-nhat',
-                                'post_status' => 'publish',
-                                'posts_per_page' => 4
-                            ];
-                            $results = new WP_Query($args);
-                            $html = '';
-                            if ($results->have_posts()):
-                            while ($results->have_posts()) : $results->the_post();
-                        ?>
-                        <div class="row item">
-                            <div class="col-sm-3">
-                                <?php if(has_post_thumbnail()){
-                                    the_post_thumbnail('nanosmall');
-                                }else{ ?>
-                                    <img title="<?php echo get_the_title() ?>" src="<?php echo get_template_directory_uri().'/images/no-thumb_80x80.png' ?>">
-                                    <?php } ?>
-                            </div>
-                            <div class="col-sm-9">
-                                <h5><a href="<?php the_permalink() ?>"><?php echo wp_trim_words(get_the_title(),15,'...') ?></a> </h5>
-                            </div>
-                        </div>
-                        <?php
-                            endwhile;
-                                wp_reset_postdata();
-                            else :
-                                echo 'Hiện tại không có khóa học nào';
-                            endif;
-                        ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 box">
-                <div class="content">
-                    <h2 class="block-title">Thư viện hỗ trợ</h2>
-                    <div class="list container-fluid">
-                        <?php
-                        $args = [
-                            'orderby' => 'DESC',
-                            'post_type' => 'post',
-                            'category_name' => 'thu-vien-ho-tro',
-                            'post_status' => 'publish',
-                            'posts_per_page' => 4
-                        ];
-                        $results = new WP_Query($args);
-                        $html = '';
-                        if ($results->have_posts()):
-                            while ($results->have_posts()) : $results->the_post();
-                                ?>
-                                <div class="row item">
-                                    <div class="col-sm-3">
-                                        <?php if(has_post_thumbnail()){
-                                            the_post_thumbnail('nanosmall');
-                                        }else{ ?>
-                                            <img title="<?php echo get_the_title() ?>" src="<?php echo get_template_directory_uri().'/images/no-thumb_80x80.png' ?>">
-                                        <?php } ?>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <h5><a href="<?php the_permalink() ?>"><?php echo wp_trim_words(get_the_title(),15,'...') ?></a> </h5>
-                                    </div>
-                                </div>
-                                <?php
-                            endwhile;
-                            wp_reset_postdata();
-                        else :
-                            echo 'Hiện tại không có khóa học nào';
-                        endif;
-                        ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 box">
-                <div class="content">
-                    <h2 class="block-title">Góc nhật bản</h2>
-                    <div class="list container-fluid">
-                        <?php
-                        $args = [
-                            'orderby' => 'DESC',
-                            'post_type' => 'post',
-                            'category_name' => 'thong-tin-nhat-ban',
-                            'post_status' => 'publish',
-                            'posts_per_page' => 4
-                        ];
-                        $results = new WP_Query($args);
-                        $html = '';
-                        if ($results->have_posts()):
-                            while ($results->have_posts()) : $results->the_post();
-                                ?>
-                                <div class="row item">
-                                    <div class="col-sm-3">
-                                        <?php if(has_post_thumbnail()){
-                                            the_post_thumbnail('nanosmall');
-                                        }else{ ?>
-                                            <img title="<?php echo get_the_title() ?>" src="<?php echo get_template_directory_uri().'/images/no-thumb_80x80.png' ?>">
-                                        <?php } ?>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <h5><a href="<?php the_permalink() ?>"><?php echo wp_trim_words(get_the_title(),15,'...') ?></a> </h5>
-                                    </div>
-                                </div>
-                                <?php
-                            endwhile;
-                            wp_reset_postdata();
-                        else :
-                            echo 'Hiện tại không có khóa học nào';
-                        endif;
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- tuyen sinh -->
+        
+      </div>
+      <div class="sidebar">
+        <?php get_sidebar(); ?>
+      </div>
+      <div class="clearfix"></div>
     </div>
+    <!-- comment -->
+    <?php //echo do_shortcode("[nuitruc-comment]"); ?>
+    <!-- comment -->
+    <div class="sidebar-widget">
+  		<?php if(!function_exists('dynamic_sidebar') || !dynamic_sidebar('widget-area-2')) ?>
+  	</div>
 </div>
 <?php
 get_footer();
